@@ -9,16 +9,16 @@ import (
 	"github.com/chromedp/chromedp"
 )
 
-func CaptureScreenshot(urlStr, deviceStr string) ([]byte, error) {
+func CaptureScreenshot(request models.ScreenshotRequest) ([]byte, error) {
 	userAgent := DesktopUserAgent
 	isMobile := false
 
-	if deviceStr == models.DeviceMobile {
+	if request.Device == models.DeviceMobile {
 		userAgent = MobileUserAgent
 		isMobile = true
 	}
 
-	width, height := GetWidthHeight(deviceStr)
+	width, height := GetWidthHeight(request.Device)
 
 	allocatorOptions := append(
 		chromedp.DefaultExecAllocatorOptions[:],
@@ -48,7 +48,7 @@ func CaptureScreenshot(urlStr, deviceStr string) ([]byte, error) {
 	err := chromedp.Run(ctx,
 		emulation.SetUserAgentOverride(userAgent),
 		emulation.SetDeviceMetricsOverride(int64(width), int64(height), 1, isMobile),
-		chromedp.Navigate(urlStr),
+		chromedp.Navigate(request.Url),
 		chromedp.Sleep(SleepDuration),
 		chromedp.CaptureScreenshot(&screenshotBytes),
 	)

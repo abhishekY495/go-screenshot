@@ -4,6 +4,6 @@ const DeviceDesktop string = "desktop"
 const DeviceMobile string = "mobile"
 
 type ScreenshotRequest struct {
-	URL    string `json:"url"`
+	Url    string `json:"url"`
 	Device string `json:"device"`
 }
