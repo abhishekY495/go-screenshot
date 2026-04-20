@@ -20,6 +20,7 @@ func main() {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", handlers.HandleRoot)
+	mux.HandleFunc("/ss", handlers.HandleScreenshot)
 
 	fmt.Println("server starting on port ", port)
 	http.ListenAndServe(":"+port, mux)
