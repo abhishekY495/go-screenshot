@@ -26,14 +26,7 @@ func CaptureScreenshot(urlStr, deviceStr string) ([]byte, error) {
 		chromedp.Flag("headless", true),
 		chromedp.Flag("hide-scrollbars", true),
 		chromedp.Flag("mute-audio", true),
-		chromedp.NoSandbox,
-		chromedp.Flag("disable-dev-shm-usage", true),
-		chromedp.Flag("disable-gpu", true),
 	)
-
-	if chromePath := ResolveChromePath(); chromePath != "" {
-		allocatorOptions = append(allocatorOptions, chromedp.ExecPath(chromePath))
-	}
 
 	allocatorCtx, cancelAllocator := chromedp.NewExecAllocator(
 		context.Background(),
