@@ -8,4 +8,9 @@ const MobileUserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 18_5 like Mac OS X) 
 const Timeout = 45 * time.Second
 const SleepDuration = 3 * time.Second
 
+const DesktopWidth = 1920
+const DesktopHeight = 945
+const MobileWidth = 430
+const MobileHeight = 932
+
 const RenderChromePath = "/opt/render/project/.render/chrome/opt/google/chrome/google-chrome"

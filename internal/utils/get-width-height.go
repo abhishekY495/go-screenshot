@@ -4,7 +4,7 @@ import "go-screenshot/internal/models"
 
 func GetWidthHeight(deviceStr string) (int64, int64) {
 	if deviceStr == models.DeviceMobile {
-		return 430, 932
+		return MobileWidth, MobileHeight
 	}
-	return 1920, 1080
+	return DesktopWidth, DesktopHeight
 }
