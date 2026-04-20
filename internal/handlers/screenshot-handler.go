@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
 	"go-screenshot/internal/models"
 	"go-screenshot/internal/utils"
 	"net/http"
@@ -10,9 +9,7 @@ import (
 func HandleScreenshot(w http.ResponseWriter, r *http.Request) {
 	// validate request method
 	if r.Method != http.MethodGet {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusMethodNotAllowed)
-		json.NewEncoder(w).Encode(utils.APIResponse(models.StatusFailure, "method not allowed", nil))
+		utils.JsonError(w, http.StatusMethodNotAllowed, "method not allowed")
 		return
 	}
 
@@ -27,20 +24,23 @@ func HandleScreenshot(w http.ResponseWriter, r *http.Request) {
 
 	// validate url
 	if !utils.ValidateURL(urlStr) {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(utils.APIResponse(models.StatusFailure, "invalid url", nil))
+		utils.JsonError(w, http.StatusBadRequest, "invalid url")
 		return
 	}
 
 	// validate device
 	if deviceStr != models.DeviceDesktop && deviceStr != models.DeviceMobile {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(utils.APIResponse(models.StatusFailure, "invalid device: supported devices include "+models.DeviceDesktop+" and "+models.DeviceMobile, nil))
+		utils.JsonError(w, http.StatusBadRequest, "invalid device: supported devices include "+models.DeviceDesktop+" and "+models.DeviceMobile)
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(utils.APIResponse(models.StatusSuccess, "screenshot taken successfully for "+urlStr+", device: "+deviceStr, nil))
+	screenshotBytes, err := utils.CaptureScreenshot(urlStr, deviceStr)
+	if err != nil {
+		utils.JsonError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	w.Header().Set("Content-Type", "image/png")
+	w.WriteHeader(http.StatusOK)
+	w.Write(screenshotBytes)
 }
