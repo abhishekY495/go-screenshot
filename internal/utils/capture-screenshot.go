@@ -28,6 +28,10 @@ func CaptureScreenshot(urlStr, deviceStr string) ([]byte, error) {
 		chromedp.Flag("mute-audio", true),
 	)
 
+	if chromePath := ResolveChromePath(); chromePath != "" {
+		allocatorOptions = append(allocatorOptions, chromedp.ExecPath(chromePath))
+	}
+
 	allocatorCtx, cancelAllocator := chromedp.NewExecAllocator(
 		context.Background(),
 		allocatorOptions...,
