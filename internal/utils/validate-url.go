@@ -6,7 +6,11 @@ import (
 )
 
 func ValidateURL(urlString string) bool {
-	if !strings.HasPrefix(urlString, "http") && !strings.HasPrefix(urlString, "https") {
+	if !strings.HasPrefix(urlString, "http://") && !strings.HasPrefix(urlString, "https://") {
+		return false
+	}
+
+	if !strings.Contains(urlString, ".") {
 		return false
 	}
 
@@ -15,5 +19,9 @@ func ValidateURL(urlString string) bool {
 		return false
 	}
 
-	return (u.Scheme == "http" || u.Scheme == "https") && u.Host != ""
+	if u.Host == "" {
+		return false
+	}
+
+	return true
 }
