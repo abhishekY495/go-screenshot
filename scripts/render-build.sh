@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-ROOT_DIR="$(pwd)"
-INSTALL_DIR="${ROOT_DIR}/.render/chrome"
-DOWNLOAD_DIR="${ROOT_DIR}/.render/downloads"
+STORAGE_DIR="/opt/render/project/.render"
+INSTALL_DIR="${STORAGE_DIR}/chrome"
+DOWNLOAD_DIR="${STORAGE_DIR}/downloads"
 DEB_PATH="${DOWNLOAD_DIR}/google-chrome-stable_current_amd64.deb"
 CHROME_BIN="${INSTALL_DIR}/opt/google/chrome/google-chrome"
 
