@@ -1,7 +1,7 @@
 package models
 
 const StatusSuccess string = "success"
-const StatusFailure string = "failure"
+const StatusError string = "error"
 
 type APIResponseModel struct {
 	Status  string `json:"status"`
