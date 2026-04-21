@@ -53,7 +53,7 @@ func CaptureScreenshot(request models.ScreenshotRequest) ([]byte, error) {
 		chromedp.CaptureScreenshot(&screenshotBytes),
 	)
 	if err != nil {
-		return nil, errors.New("failed to capture screenshot: " + err.Error())
+		return nil, errors.New("failed to capture screenshot - " + err.Error())
 	}
 
 	return screenshotBytes, nil

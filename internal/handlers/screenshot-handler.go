@@ -45,7 +45,7 @@ func HandleScreenshot(w http.ResponseWriter, r *http.Request) {
 
 	// validate device
 	if deviceStr != models.DeviceDesktop && deviceStr != models.DeviceMobile {
-		utils.JsonError(w, http.StatusBadRequest, "invalid device: supported devices include "+models.DeviceDesktop+" and "+models.DeviceMobile)
+		utils.JsonError(w, http.StatusBadRequest, "invalid device - supported devices include "+models.DeviceDesktop+" and "+models.DeviceMobile)
 		return
 	}
 
